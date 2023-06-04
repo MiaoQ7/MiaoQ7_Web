@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.modules.csgo.goods.mapper.CsgoGoodsMapper">
+    
+    <resultMap type="CsgoGoods" id="CsgoGoodsResult">
+        <result property="goodsId"    column="goods_id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="goodsScuffType"    column="goods_scuff_type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="goodsType"    column="goods_type"    />
+    </resultMap>
+
+    <sql id="selectCsgoGoodsVo">
+        select goods_id, goods_name, goods_scuff_type, create_time, update_time, remark, goods_type from csgo_goods
+    </sql>
+
+    <select id="selectCsgoGoodsList" parameterType="CsgoGoods" resultMap="CsgoGoodsResult">
+        <include refid="selectCsgoGoodsVo"/>
+        <where>  
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="goodsScuffType != null  and goodsScuffType != ''"> and goods_scuff_type = #{goodsScuffType}</if>
+            <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+            <if test="goodsType != null  and goodsType != ''"> and goods_type = #{goodsType}</if>
+        </where>
+    </select>
+    
+    <select id="selectCsgoGoodsByGoodsId" parameterType="Long" resultMap="CsgoGoodsResult">
+        <include refid="selectCsgoGoodsVo"/>
+        where goods_id = #{goodsId}
+    </select>
+        
+    <insert id="insertCsgoGoods" parameterType="CsgoGoods" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into csgo_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">goods_name,</if>
+            <if test="goodsScuffType != null and goodsScuffType != ''">goods_scuff_type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="goodsType != null and goodsType != ''">goods_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="goodsScuffType != null and goodsScuffType != ''">#{goodsScuffType},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="goodsType != null and goodsType != ''">#{goodsType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCsgoGoods" parameterType="CsgoGoods">
+        update csgo_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="goodsScuffType != null and goodsScuffType != ''">goods_scuff_type = #{goodsScuffType},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="goodsType != null and goodsType != ''">goods_type = #{goodsType},</if>
+        </trim>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteCsgoGoodsByGoodsId" parameterType="Long">
+        delete from csgo_goods where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteCsgoGoodsByGoodsIds" parameterType="String">
+        delete from csgo_goods where goods_id in 
+        <foreach item="goodsId" collection="array" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+
+</mapper>
