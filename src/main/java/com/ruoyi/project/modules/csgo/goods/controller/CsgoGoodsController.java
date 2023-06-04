@@ -1,6 +1,8 @@
 package com.ruoyi.project.modules.csgo.goods.controller;
 
 import java.util.List;
+
+import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

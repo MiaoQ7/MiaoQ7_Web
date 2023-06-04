@@ -2,6 +2,8 @@ package com.ruoyi.project.modules.csgo.goods.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.modules.csgo.goods.mapper.CsgoGoodsMapper;
@@ -40,6 +42,7 @@ public class CsgoGoodsServiceImpl implements ICsgoGoodsService
      * @return 饰品库
      */
     @Override
+    @DataScope(deptAlias = "g", userAlias = "g")
     public List<CsgoGoods> selectCsgoGoodsList(CsgoGoods csgoGoods)
     {
         return csgoGoodsMapper.selectCsgoGoodsList(csgoGoods);
@@ -55,6 +58,8 @@ public class CsgoGoodsServiceImpl implements ICsgoGoodsService
     public int insertCsgoGoods(CsgoGoods csgoGoods)
     {
         csgoGoods.setCreateTime(DateUtils.getNowDate());
+        csgoGoods.setUserId(ShiroUtils.getUserId());
+        csgoGoods.setDeptId(ShiroUtils.getSysUser().getDeptId());
         return csgoGoodsMapper.insertCsgoGoods(csgoGoods);
     }
 

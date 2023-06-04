@@ -22,10 +22,6 @@
                                 </select>
                             </li>
                             <li>
-                                <label>备注：</label>
-                                <input type="text" name="remark"/>
-                            </li>
-                            <li>
                                 <label>饰品类型：</label>
                                 <select name="goodsType" th:with="type=${@dict.getType('csgo_goods_type')}">
                                     <option value="">所有</option>
@@ -96,15 +92,15 @@
                     }
                 },
                 {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
                     field: 'goodsType',
                     title: '饰品类型',
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(goodsTypeDatas, value);
                     }
-                },
-                {
-                    field: 'remark',
-                    title: '备注'
                 },
                 {
                     field: 'createTime',

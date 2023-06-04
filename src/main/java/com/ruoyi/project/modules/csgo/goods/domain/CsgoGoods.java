@@ -30,6 +30,12 @@ public class CsgoGoods extends BaseEntity
     @Excel(name = "饰品类型")
     private String goodsType;
 
+    /**  */
+    private Long deptId;
+
+    /**  */
+    private Long userId;
+
     public void setGoodsId(Long goodsId)
     {
         this.goodsId = goodsId;
@@ -66,6 +72,24 @@ public class CsgoGoods extends BaseEntity
     {
         return goodsType;
     }
+    public void setDeptId(Long deptId)
+    {
+        this.deptId = deptId;
+    }
+
+    public Long getDeptId()
+    {
+        return deptId;
+    }
+    public void setUserId(Long userId)
+    {
+        this.userId = userId;
+    }
+
+    public Long getUserId()
+    {
+        return userId;
+    }
 
     @Override
     public String toString() {
@@ -73,10 +97,12 @@ public class CsgoGoods extends BaseEntity
             .append("goodsId", getGoodsId())
             .append("goodsName", getGoodsName())
             .append("goodsScuffType", getGoodsScuffType())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("goodsType", getGoodsType())
+            .append("createTime", getCreateTime())
+            .append("updateTime", getUpdateTime())
+            .append("deptId", getDeptId())
+            .append("userId", getUserId())
             .toString();
     }
 }
